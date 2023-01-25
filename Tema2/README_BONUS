@@ -1,0 +1,7 @@
+Pentru a realiza cititul paralelizat in main am pornit P thread-uri initial de
+nivel 1 ce se folosesc de acelasi buffer pentru a citi din fisierul orders.txt,
+astfel fiecare linie citita de un anume thread nu va mai fi citita ulterior de 
+un altul. 
+(nu stiu daca se incadreaza la BONUS, insa ideea bonusului era ca thread-uri 
+diferite sa nu citeasca aceeasi linie de mai multe ori, fapt ce este asigurat
+in implementarea pe care am realizat-o, inclusiv pentru thread-urile de nivel2)

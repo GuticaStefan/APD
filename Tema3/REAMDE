@@ -1,0 +1,37 @@
+    In rezolvarea temei am folosit laboratorul 10 ca "schelet" si am modificat
+functiile pentru a se plia pe cerinta temei.
+    Am rezolvat task-urile 1 si 3 simultan intrucat s-a precizat pe forum
+ca este permis.(practic am rezolvat din prima task-ul 3)
+    Initial coordonatorii isi citesc workerii din fisierele corespunzatoare
+si in acelasi timp isi fac legaturile cu ceilalti coordonatori din inelul
+intrerupt. Dupa asta workerii primesc informatia legata de cluster-ul in
+care se afla si care este parintele/liderul acestora. Ierarhia din inelul 
+cu coordonatori este urmatoarea : 
+- 0 este parinte/leader pentru workerii sai +  coord 3
+- 3 este parinte pentru workerii sai +  coord 2
+- 2 este parinte pentru workerii sai +  coord 1
+    Pentru stabilirea topologiei am folosit algoritmul facut in lab 10
+pe care l-am updatat cerintei temei tinand cont de ierarhia aleasa a inelului
+cu coordonatori.
+    Pentru realizarea calculelor am folosit 2 functii auxiliare:
+- precalc_clusters_multiplies -> calculeaza numarul de elemente din vector
+    de care se ocupa fiecare cluster(in functie de nr de workeri pe care ii are)
+- precalc_workers_multiplies -> calculeaza numarul de elemente de care se ocupa
+    fiecare worker al unui cluster in parte(in functie de nr de calcule alocate
+    cluter-ului din care face parte)
+    Pentru realizarea calculelor am urmat pasii:
+-> Am trimis din coord 0 vectorul de prelucrat catre workerii acestuia si coord 3
+-> Am primit vectorul in coord 3
+-> Am trimis din coord 3 vectorul de prelucrat catre workerii acestuia si coord 2
+-> Am primit vectorul in coord 2 si am trimis catre workeri si coord 1
+-> Am trimis din coord 1 vectorul de prelucrat catre workerii acestuia
+-> Workerii au primit vectorul alaturi de 2 indici: "start si end" ce
+semnifica pozitia de inceput si final din vector pe care trebuie sa le prelucreze
+(pozitii ce le-am determinat cu ajutorul celor 2 functii auxiliare mentionate
+mai sus)
+-> Dupa ce workerii isi fac treaba trimit vectorul modificat catre parinti
+(coordonatorii cluster-ului din care fac parte)
+-> Cand coordonatori primesc vectorii de la workeri isi updateaza in proprii
+vectori elementele modificate si trimit inapoi pe aceeasi cale catre coord 0
+-> Cand coord 0 primeste vectorul il reasambleaza(face toate update-urile
+pe elementele modificate) dupa care il afiseaza

@@ -1,0 +1,22 @@
+Am folosit o coada de string-uri unde retin la citire fisierele din care trebuie
+sa fac citirea, si atribui de fiecare data fisierul urmator la coada pentru
+fiecare thread mapper.
+Lista partiala are urmatoarea functionalitate:
+partial_lists[i] - reprezinta lista creata de thread-ul mapper i
+partial_lists[i][j] - reprezinta numerele puteri perfecte cu exponentul
+                    j gasite de thread-ul mapper i
+
+Thread-urile cu id-urile de la 0 la nr_mapperi - 1 sunt thread-uri mapper,
+celelalte fiind thread-uri reducer
+La scoaterea din coada a fisierelor am folosit un mutex deoarece 
+reprezinta regiune critica(mai multe thread-uri ar putea sa considere
+acelasi fisier din coada pentru prelucrare). "Munca" thread-urilor mapper
+se termina cand coada cu fisiere de prelucrat ajunge vida.
+Pentru a descoperi daca un numar este putere perfecta am folosit un algoritm
+ de cautare binara, updatat dupa urmatorul model :
+https://www.geeksforgeeks.org/check-if-a-given-number-is-a-perfect-square-using-binary-search/
+
+Inainte de a incepe prelucrarea atribuita thread-urilor reducer am folosit
+o bariera pentru a garanta finalitatea prelucrarii thread-urilor de tip mapper
+Thread-urile reducer parcurg listele create de thread-urile mapper pe exponentii
+asignati in functie de id-ul acestora.

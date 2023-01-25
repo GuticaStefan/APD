@@ -1,0 +1,21 @@
+Pentru rezolvarea temei am folosit modelul ExecutorService. Am creat 2 executori
+care accepta maxim P thread-uri pt fiecare nivel in parte(pt a ma asigura ca 
+pe fiecare nivel la orice moment sunt maxim P thread-uri active)
+Am folosit 2 clase auxiliare MyTask1 si MyTask2, fiecare reprezentant task-ul
+thread-urile de nivel1, respectiv 2.
+Pentru a realiza cititul paralelizat in main am pornit P thread-uri initial de
+nivel 1 ce se folosesc de acelasi buffer pentru a citi din fisierul orders.txt,
+astfel fiecare linie citita de un anume thread nu va mai fi citita ulterior de 
+un altul.
+Aceeasi abordare am folosit si pentru citirea pe care o realizeaza thread-urile
+de nivel2, astfel ca N thread-uri ce se ocupa de aceeasi comanda vor folosit
+acelasi BufferedReader pentru citire.(am folosit BufferedReader si BufferedWriter
+deoarece din constructie sunt sincronizate si pot fi folosite de mai multe thread-uri)
+Pentru thread-urile de nivel 1 am folosit un executor service si o coada,
+iar pentru cele de nivel 2 am folosit un alt executor service si o coada diferita
+pentru fiecare comanda in parte pentru a face thread-ul de nivel 1 sa astepte
+ca thread urile de nivel 2 create de acesta sa isi termine munca, ulterior acesta urmand
+sa treaca si el mai departe.
+Pentru a opri cei 2 executori service am asteptat in main ca thread-urile de nivel 1
+sa termine, deoarece ultimul thread de nivel 1 va termina cand toate cele de nivel 2
+vor termina la randul lor(acesta e felul in construit)
